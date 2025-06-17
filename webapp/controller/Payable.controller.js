@@ -15,19 +15,21 @@ sap.ui.define([
         },
 
         onClickDelete() {
-            let selectedData = this.byId("_IDGenSmartTable").getSelectedItems(),
+            let table = this.byId("_IDGenSmartTable").getTable();
+            let selectedData = table.getSelectedIndices(),
                 that = this;
             this.oDataModel.setDeferredGroups(["deleteItems"]);
             for (let index = 0; index < selectedData.length; index++) {
-                const element = selectedData[index].getBindingContext()?.getObject() || {};
+                const element = table.getContextByIndex(selectedData[index])?.getObject() || {};
 
                 if (!element) continue;
 
                 this.oDataModel.create("/falsedelete", {}, {
                     urlParameters: {
-                        "Vutdate": `datetime'${element.Vutdate.toISOString().replace("Z", "")}'`,
+                        "Vutdate": `${element.Vutdate}'`,
                         "Unit": `'${element.Unit}'`,
-                        "Vutacode": `'${element.Vutacode}'`
+                        "Vutacode": `'${element.Vutacode}'`,
+                        "Createdtime": this.msToHHMMSS(parseInt(element.Createdtime.ms))
                     },
                     headers: {
                         "If-Match": "*"
@@ -41,20 +43,22 @@ sap.ui.define([
 
         },
         onClickPost() {
-            let selectedData = this.byId("_IDGenSmartTable").getSelectedItems(),
+            let table = this.byId("_IDGenSmartTable").getTable();
+            let selectedData = table.getSelectedIndices(),
                 that = this;
 
             let data = selectedData.map((item) => {
-                const element = item.getBindingContext()?.getObject() || {};
+                const element = table.getContextByIndex(item)?.getObject() || {};
                 return {
-                    "Vutdate": `datetime'${element.Vutdate.toISOString().replace("Z", "")}'`,
-                    "Unit": `'${element.Unit}'`,
-                    "Vutacode": `'${element.Vutacode}'`
+                    "Vutdate": element.Vutdate,
+                    "Unit": element.Unit,
+                    "Vutacode": element.Vutacode,
+                    "Createdtime": this.msToHHMMSS(parseInt(element.Createdtime.ms))
                 }
             })
 
             $.ajax({
-                url: '/sap/bc/http/sap/ZHTTP_BANKPAYABLE',
+                url: '/sap/bc/http/sap/ZHTTP_BANKPAYABLEPOST',
                 method: "POST",
                 contentType: "application/json",
                 data: JSON.stringify(data),
@@ -63,7 +67,7 @@ sap.ui.define([
                     that.byId("_IDGenSmartTable").rebindTable(true);
                 },
                 error: function (error) {
-                    MessageToast.show("Upload failed: " + (error.responseText || "Unknown error"));
+                    MessageToast.show("Upload failed: " + (error || "Unknown error"));
                 }
             });
 
@@ -76,6 +80,7 @@ sap.ui.define([
                 MessageToast.show("No file selected.");
                 return;
             }
+            BusyIndicator.show(0);
             if (window.FileReader) {
                 var reader = new FileReader();
                 reader.onload = function (e) {
@@ -127,9 +132,11 @@ sap.ui.define([
                                 success: function (response) {
                                     MessageToast.show(response);
                                     that.byId("_IDGenSmartTable").rebindTable(true);
+                                    BusyIndicator.hide();
                                 },
                                 error: function (error) {
                                     MessageToast.show("Upload failed: " + (error.responseText || "Unknown error"));
+                                    BusyIndicator.hide();
                                 }
                             });
 
@@ -177,12 +184,27 @@ sap.ui.define([
                     link.click();
                     document.body.removeChild(link);
                     BusyIndicator.hide();
+                    this.byId("_IDGenDialog").close();
                 },
                 error: function () {
                     BusyIndicator.hide();
                 }
             });
         },
+        msToHHMMSS(ms) {
+            // Convert milliseconds to total seconds
+            const totalSeconds = Math.floor(ms / 1000);
+            // Calculate hours, minutes, and seconds
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+            // Pad with zeroes if needed and format as HHMMSS
+            return (
+              String(hours).padStart(2, '0') +
+              String(minutes).padStart(2, '0') +
+              String(seconds).padStart(2, '0')
+            );
+          },
         _convertToCSV: function (data) {
             var csvRows = [];
 
@@ -250,15 +272,15 @@ sap.ui.define([
                         method: "POST",
                         contentType: "application/json",
                         data: data,
-                        success: function () {
-                            MessageToast.show(data);
+                        success: function (response) {
+                            MessageToast.show(response);
                             that.byId("_IDGenSmartTable").rebindTable(true);
+                            this.byId("uploadDialog").close();
                         },
                         error: function (error) {
                             MessageToast.show("Upload failed: " + (error.responseText || "Unknown error"));
                         }
                     });
-                    that.processCSVData(data);
                 };
                 reader.onerror = function (error) {
                     MessageToast.show("Error reading file: ", error);
