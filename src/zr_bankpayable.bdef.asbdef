@@ -25,7 +25,7 @@ authorization master( global )
   update;
   delete;
 
-
+ action falsedelete;
 
   mapping for ZBANKPAYABLE
   {
@@ -53,6 +53,7 @@ authorization master( global )
     Vutemail = vutemail;
     AccountingDocument = accountingdocument;
     IsPosted = is_posted;
+    IsDeleted = is_deleted;
     CreatedBy = created_by;
     CreatedAt = created_at;
     LocalLastChangedBy = local_last_changed_by;

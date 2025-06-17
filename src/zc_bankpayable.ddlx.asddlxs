@@ -17,14 +17,24 @@ annotate view ZC_BANKPAYABLE with
     type: #IDENTIFICATION_REFERENCE
   } ]
   
-  @UI.identification: [ {
+@UI.identification: [ 
+  { position: 20,
+  label: 'Delete',
+  type: #FOR_ACTION,
+  dataAction: 'falsedelete',
+  invocationGrouping: #CHANGE_SET,
+  importance: #HIGH },{
     position: 10
-  } ]
-  
-  @UI.lineItem: [ {
+  } ]  
+  @UI.lineItem: [ 
+  { position: 20,
+  label: 'Delete',
+  type: #FOR_ACTION,
+  dataAction: 'falsedelete',
+  invocationGrouping: #CHANGE_SET,
+  importance: #HIGH },{
     position: 10
-  } ]
-  
+  }  ]
   
   @UI.selectionField: [ {
     position: 10 

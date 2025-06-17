@@ -13,13 +13,6 @@ CLASS LHC_ZR_BANKRECEIPT DEFINITION INHERITING FROM CL_ABAP_BEHAVIOR_HANDLER.
       IMPORTING keys FOR ACTION ZrBankreceipt~falsedelete.
 
 
-*       METHODS publish FOR MODIFY
-*      IMPORTING keys FOR ACTION ZrBankreceipt~publishAction.
-
-
-
-
-
 
 
   ENDCLASS.

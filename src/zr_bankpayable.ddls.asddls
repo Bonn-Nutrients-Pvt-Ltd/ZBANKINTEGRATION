@@ -28,6 +28,7 @@ define root view entity ZR_BANKPAYABLE
   uploadfilename as UploadFileName, 
   accountingdocument as AccountingDocument,
   is_posted as IsPosted,
+  is_deleted as IsDeleted,
   @Semantics.user.createdBy: true
   created_by as CreatedBy,
   @Semantics.systemDateTime.createdAt: true
