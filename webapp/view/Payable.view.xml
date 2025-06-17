@@ -1,0 +1,172 @@
+<mvc:View
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:smartFilterBar="sap.ui.comp.smartfilterbar"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+    xmlns:l="sap.ui.layout"
+    xmlns:core="sap.ui.core"
+    xmlns:u="sap.ui.unified"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+    controllerName="zpayable.controller.Payable"
+    height="100%"
+>
+    <VBox
+        id="_IDGenVBox1"
+        fitContainer="true"
+        height="100%"
+    >
+        <smartFilterBar:SmartFilterBar
+            id="_IDGenSmartFilterBar"
+            entitySet="BankPayable"
+            persistencyKey="SmartFilter_Explored"
+        >
+            <smartFilterBar:controlConfiguration>
+                <smartFilterBar:ControlConfiguration
+                    id="_IDGenControlConfiguration1"
+                    key="Vutdate"
+                    visibleInAdvancedArea="true"
+                />
+                <smartFilterBar:ControlConfiguration
+                    id="_IDGenControlConfiguration2"
+                    key="Unit"
+                    visibleInAdvancedArea="true"
+                />
+                <smartFilterBar:ControlConfiguration
+                    id="_IDGenControlConfiguration3"
+                    key="Vutaacode"
+                    visibleInAdvancedArea="true"
+                />
+            </smartFilterBar:controlConfiguration>
+            <smartFilterBar:layoutData>
+                <FlexItemData
+                    id="_IDGenFlexItemData1"
+                    shrinkFactor="0"
+                />
+            </smartFilterBar:layoutData>
+        </smartFilterBar:SmartFilterBar>
+        <smartTable:SmartTable
+            id="_IDGenSmartTable"
+            entitySet="BankPayable"
+            tableType="Table"
+            header="Pending Bank Posting"
+            smartFilterId="_IDGenSmartFilterBar"
+            class="sapUiResponsiveContentPadding"
+            persistencyKey="SmartTablePersistencyKey"
+            useVariantManagement="true"
+            useTablePersonalisation="true"
+            enableAutoColumnWidth="true"
+            initiallyVisibleFields="Vutaacode,Unit,Vutdate,Vutatag,Vutacode,CreatedTime,Vutamt,Custref,Vutref,Vutnart,Vutcostcd,Vutbgtcd,Vutloccd,Vutemail"
+            width="100%"
+        >
+            <smartTable:customToolbar>
+                <OverflowToolbar id="_IDGenOverflowToolbar2">
+                    <ToolbarSpacer id="_IDGenToolbarSpacer" />
+                    <u:FileUploader
+                        id="fileUploader"
+                        name="myFileUpload"
+                        uploadUrl="upload/"
+                        fileType="XLSX,xlsx"
+                        class="sapUiMediumMargin"
+                        tooltip="Upload your file to the local server"
+                        change="browseAndUpload"
+                    />
+                    <Button
+                        id="_IDGenButtonExport"
+                        text="Export"
+                        icon="sap-icon://excel-attachment"
+                        press="onClickExport"
+                    />
+                    <Button
+                        id="_IDGenButtonUpload"
+                        text="Upload"
+                        icon="sap-icon://upload"
+                        press="onClickupload"
+                    />
+                    <Button
+                        id="_IDGenButton4"
+                        text="Delete"
+                        press="onClickDelete"
+                    />
+                    <Button
+                        id="_IDGenButton5"
+                        text="Post"
+                        press="onClickPost"
+                    />
+                </OverflowToolbar>
+            </smartTable:customToolbar>
+            <Dialog
+                id="uploadDialog"
+                title="Upload CSV File"
+                draggable="true"
+                class="sapUiContentPadding"
+                type="Message"
+            >
+                <VBox id="_IDGenVBox">
+                    <u:FileUploader
+                        id="fileUploader2"
+                        name="myFileUpload"
+                        uploadUrl="upload/"
+                        change="uploadcsvfilechange"
+                        fileType="CSV,csv"
+                        tooltip="Upload your file to the local server"
+                        buttonOnly="false"
+                    />
+                </VBox>
+                <beginButton>
+                    <Button
+                        id="btnDialogUpload"
+                        text="Upload"
+                        press="onUploadFile"
+                    />
+                </beginButton>
+                <endButton>
+                    <Button
+                        id="_IDGenButton"
+                        text="Cancel"
+                        press="onCloseDialog"
+                    />
+                </endButton>
+            </Dialog>
+
+            <Dialog
+                id="_IDGenDialog"
+                title="Download CSV File"
+                draggable="true"
+                class="sapUiContentPadding"
+                type="Message"
+            >
+                <VBox id="_IDGenVBox3">
+                    <HBox id="_IDGenHBox" justifyContent="SpaceAround" alignItems="Center">
+                        <Label
+                            id="_IDGenLabel"
+                            text="File :"
+                        />
+                        <Input id="_IDGenInput" />
+                    </HBox>
+                </VBox>
+                <beginButton>
+                    <Button
+                        id="_IDGenButton1"
+                        text="Download"
+                        press="onClickDownload"
+                    />
+                </beginButton>
+                <endButton>
+                    <Button
+                        id="_IDGenButton2"
+                        text="Cancel"
+                        press="onCloseDownloadDialog"
+                    />
+                </endButton>
+            </Dialog>
+            <smartTable:layoutData>
+                <FlexItemData
+                    id="_IDGenFlexItemData2"
+                    growFactor="1"
+                    baseSize="0%"
+                />
+            </smartTable:layoutData>
+        </smartTable:SmartTable>
+    </VBox>
+</mvc:View>

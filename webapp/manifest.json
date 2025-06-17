@@ -1,0 +1,156 @@
+{
+  "_version": "1.65.0",
+  "sap.app": {
+    "id": "zpayable",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.18.0",
+      "toolsId": "60b9b7e0-47fb-4b09-babd-8c9fcfaecb91"
+    },
+    "dataSources": {
+      "ZUI_BANKINTEGRATION_VAN": {
+        "uri": "/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Annotations(TechnicalName='ZUI_BANKINTEGRATION_VAN',Version='0001')/$value/",
+        "type": "ODataAnnotation",
+        "settings": {
+          "localUri": "localService/mainService/ZUI_BANKINTEGRATION_VAN.xml"
+        }
+      },
+      "mainService": {
+        "uri": "sap/opu/odata/sap/ZUI_BANKINTEGRATION",
+        "type": "OData",
+        "settings": {
+          "annotations": [
+            "ZUI_BANKINTEGRATION_VAN"
+          ],
+          "localUri": "localService/mainService/metadata.xml",
+          "odataVersion": "2.0"
+        }
+      }
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "ZBANKPAYABLE-List": {
+          "semanticObject": "ZBANKPAYABLE",
+          "action": "List",
+          "title": "{{ZBANKPAYABLE-List.flpTitle}}",
+          "subTitle": "{{ZBANKPAYABLE-List.flpSubtitle}}",
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          }
+        },
+        "ZBANKPAYPOST-List": {
+          "semanticObject": "ZBANKPAYPOST",
+          "action": "List",
+          "title": "{{ZBANKPAYPOST-List.flpTitle}}",
+          "subTitle": "{{ZBANKPAYPOST-List.flpSubtitle}}",
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          }
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.136.1",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "zpayable.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ],
+      "js": [
+        {
+          "uri": "libs/xlsx.full.min.js"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "controlAggregation": "pages",
+        "controlId": "app",
+        "transition": "slide",
+        "type": "View",
+        "viewType": "XML",
+        "path": "zpayable.view",
+        "async": true,
+        "viewPath": "zpayable.view"
+      },
+      "routes": [
+        {
+          "name": "RoutePayable",
+          "pattern": ":?query:",
+          "target": [
+            "TargetPayable"
+          ]
+        }
+      ],
+      "targets": {
+        "TargetPayable": {
+          "id": "Payable",
+          "name": "Payable"
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "zpayable.view.App",
+      "type": "XML",
+      "id": "App",
+      "async": true
+    }
+  }
+}

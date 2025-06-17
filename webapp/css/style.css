@@ -1,0 +1,13 @@
+/* Enter your custom styles here */
+@media (min-width: 80rem) {
+    .sapUiMedia-Std-Desktop .sapUShellApplicationContainer.sapUShellApplicationContainerLimitedWidth {
+        width: 100%!important;
+    }
+}
+
+
+
+[id$="---Payable--GridTable"] {
+    height: 63vh;
+    overflow-y: auto;
+}
