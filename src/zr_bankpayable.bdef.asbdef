@@ -45,11 +45,14 @@ authorization master( global )
     Vutnart = vutnart;
     Vutcostcd = vutcostcd;
     UTR = utr;
+    Log = log;
     PostingDate = postingdate;
     PayStatus = paymentstat;
     Vutbgtcd = vutbgtcd;
     Vutloccd = vutloccd;
     Vutemail = vutemail;
+    AccountingDocument = accountingdocument;
+    IsPosted = is_posted;
     CreatedBy = created_by;
     CreatedAt = created_at;
     LocalLastChangedBy = local_last_changed_by;

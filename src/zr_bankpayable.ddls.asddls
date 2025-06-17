@@ -26,6 +26,8 @@ define root view entity ZR_BANKPAYABLE
   paymentstat as PayStatus,
   log  as Log,                
   uploadfilename as UploadFileName, 
+  accountingdocument as AccountingDocument,
+  is_posted as IsPosted,
   @Semantics.user.createdBy: true
   created_by as CreatedBy,
   @Semantics.systemDateTime.createdAt: true

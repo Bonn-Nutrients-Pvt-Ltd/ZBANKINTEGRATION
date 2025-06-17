@@ -16,6 +16,11 @@ PUBLIC SECTION.
     RETURNING
       VALUE(message) TYPE string .
 
+ CLASS-METHODS  checkDateFormat
+      IMPORTING
+        date           TYPE string
+      RETURNING
+        VALUE(message) TYPE string.
 protected section.
 private section.
 ENDCLASS.
@@ -130,7 +135,7 @@ CLASS ZCL_HTTP_BANKPAYABLE IMPLEMENTATION.
                  UploadFileName = wa-uploadName
                  TransType = code
                  InstructionRefNum = unique_ref
-                 UniqTracCode = |{ code }{ unique_ref }DT{ wa-vutdate }A{ wa-vutacode }{ wa-vutatag }{ wa-vutaacode }|
+                 UniqTracCode = |{ code }{ unique_ref }DT{ checkDateFormat( CONV STRING( wa-vutdate ) ) }A{ wa-vutacode }{ wa-vutatag }{ wa-vutaacode }|
                ) )
            REPORTED DATA(ls_po_reported)
            FAILED   DATA(ls_po_failed)
@@ -176,8 +181,18 @@ CLASS ZCL_HTTP_BANKPAYABLE IMPLEMENTATION.
     ELSE.
       max_num += 1.
     ENDIF.
+  ENDMETHOD.
 
+    METHOD checkDateFormat.
 
+    DATA: lv_date_parts TYPE TABLE OF string.
+    TRY.
+        SPLIT date AT '/' INTO  DATA(lv_date_parts1) DATA(lv_date_parts2) DATA(lv_date_parts3) .
+        message = lv_date_parts3 && lv_date_parts2 && lv_date_parts1.
+      CATCH cx_sy_itab_line_not_found.
+        message = |Invalid Document date format: { date }|.
+        RETURN.
+    ENDTRY.
   ENDMETHOD.
 
 

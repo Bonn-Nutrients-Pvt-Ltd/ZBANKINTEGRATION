@@ -38,6 +38,8 @@ CLASS ZCL_HTTP_BANKPAYABLEDNLD IMPLEMENTATION.
 
     LOOP AT lt_bankpayable INTO DATA(ls_bankpayable).
 
+      ls_bankpayable-Vutaacode = |{ ls_bankpayable-Vutaacode ALPHA = IN }|.
+
       SELECT SINGLE FROM I_BusinessPartnerBank AS a
           INNER JOIN I_Bank_2 AS b ON a~BankNumber = b~BankInternalID AND a~BankCountryKey = b~BankCountry
           FIELDS a~BankName, a~BankAccount AS BeneficiaryAccount, a~BankNumber AS IFSCCode, a~BankAccountHolderName AS BeneficiaryName,

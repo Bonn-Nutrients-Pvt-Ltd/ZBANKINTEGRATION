@@ -52,6 +52,15 @@ annotate view ZC_BANKPAYABLE with
   } ]
   Vutacode;
   
+  @EndUserText.label: 'Uploading Time'
+  @UI.identification: [ {
+    position: 35
+  } ]
+  @UI.lineItem: [ {
+    position: 35
+  } ]
+  Createdtime;
+  
   @EndUserText.label: 'Account Type'
   @UI.identification: [ {
     position: 40

@@ -32,5 +32,5 @@ define root view entity ZC_BANKPAYABLE
   LocalLastChangedBy,
   LocalLastChangedAt,
   LastChangedAt
-  
 }
+where IsPosted = ''
