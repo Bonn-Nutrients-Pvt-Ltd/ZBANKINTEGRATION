@@ -73,7 +73,7 @@ sap.ui.define([
             var that = this;
             var file = oEvent.getParameter("files") && oEvent.getParameter("files")[0];
             if (!file) {
-                console.error("No file selected.");
+                MessageToast.show("No file selected.");
                 return;
             }
             if (window.FileReader) {
@@ -136,15 +136,15 @@ sap.ui.define([
                         });
 
                     } catch (error) {
-                        console.error("Error parsing the Excel file: ", error);
+                        MessageToast.show("Error parsing the Excel file: ", error);
                     }
                 };
                 reader.onerror = function (error) {
-                    console.error("Error reading file: ", error);
+                    MessageToast.show("Error reading file: ", error);
                 };
                 reader.readAsBinaryString(file);
             } else {
-                console.error("FileReader is not supported in this browser.");
+                MessageToast.show("FileReader is not supported in this browser.");
             }
         },
 
@@ -225,35 +225,49 @@ sap.ui.define([
         onClickupload: function () {
             this.byId("uploadDialog").open();
         },
-        uploadcsvfilechange:function(oEvent){
-            this.file =  oEvent.getParameter("files") && oEvent.getParameter("files")[0];
+        uploadcsvfilechange: function (oEvent) {
+            this.file = oEvent.getParameter("files") && oEvent.getParameter("files")[0];
             if (!this.file) {
-                console.error("No file selected.");
+                MessageToast.show("No file selected.");
                 return;
             }
         },
         onUploadFile: function () {
-
             if (!this.file) {
                 MessageToast.show("Please select a CSV file.");
                 return;
             }
+            let filename = this.file.name;
             if (window.FileReader) {
                 var reader = new FileReader();
                 reader.onload = function (e) {
                     var data = e.target.result;
-                    console.log(data);
-                    // send data to backend http service to process and save data
+                    $.ajax({
+                        url: '/sap/bc/http/sap/ZHTTP_BANKPAYABLESHOW',
+                        headers: {
+                            "filename": filename
+                        },
+                        method: "POST",
+                        contentType: "application/json",
+                        data: data,
+                        success: function () {
+                            MessageToast.show(data);
+                            that.byId("_IDGenSmartTable").rebindTable(true);
+                        },
+                        error: function (error) {
+                            MessageToast.show("Upload failed: " + (error.responseText || "Unknown error"));
+                        }
+                    });
+                    that.processCSVData(data);
                 };
                 reader.onerror = function (error) {
-                    console.error("Error reading file: ", error);
+                    MessageToast.show("Error reading file: ", error);
                 };
                 reader.readAsText(this.file);
             } else {
-                console.error("FileReader is not supported in this browser.");
+                MessageToast.show("FileReader is not supported in this browser.");
             }
             var that = this;
-            
 
         },
         processCSVData: function (data) {
@@ -287,7 +301,7 @@ sap.ui.define([
         storeRecords: function (records) {
             var that = this;
             $.ajax({
-                url: '/sap/bc/http/sap/ZHTTP_BANKPAYABLE',
+                url: '/sap/bc/http/sap/ZHTTP_BANKPAYABLESHOW',
                 method: "POST",
                 contentType: "application/json",
                 data: JSON.stringify(records),
