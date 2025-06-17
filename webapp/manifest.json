@@ -1,0 +1,137 @@
+{
+  "_version": "1.65.0",
+  "sap.app": {
+    "id": "brpending",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.18.0",
+      "toolsId": "ce881634-5724-46e5-badc-094e70b2b0a6"
+    },
+    "dataSources": {
+      "ZUI_BANKINTEGRATION_VAN": {
+        "uri": "/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Annotations(TechnicalName='ZUI_BANKINTEGRATION_VAN',Version='0001')/$value/",
+        "type": "ODataAnnotation",
+        "settings": {
+          "localUri": "localService/mainService/ZUI_BANKINTEGRATION_VAN.xml"
+        }
+      },
+      "mainService": {
+        "uri": "/sap/opu/odata/sap/ZUI_BANKINTEGRATION/",
+        "type": "OData",
+        "settings": {
+          "annotations": [
+            "ZUI_BANKINTEGRATION_VAN"
+          ],
+          "localUri": "localService/mainService/metadata.xml",
+          "odataVersion": "2.0"
+        }
+      }
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "zbankpending-list": {
+          "semanticObject": "zbankpending",
+          "action": "list",
+          "title": "{{zbankpending-list.flpTitle}}",
+          "subTitle": "{{zbankpending-list.flpSubtitle}}",
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          }
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.130.10",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "brpending.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {}
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "controlAggregation": "pages",
+        "controlId": "app",
+        "transition": "slide",
+        "type": "View",
+        "viewType": "XML",
+        "path": "brpending.view",
+        "async": true,
+        "viewPath": "brpending.view"
+      },
+      "routes": [
+        {
+          "name": "RouteBank",
+          "pattern": ":?query:",
+          "target": [
+            "TargetBank"
+          ]
+        }
+      ],
+      "targets": {
+        "TargetBank": {
+          "id": "Bank",
+          "name": "Bank"
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "brpending.view.App",
+      "type": "XML",
+      "id": "App",
+      "async": true
+    }
+  }
+}
