@@ -1,0 +1,234 @@
+@Metadata.layer: #CORE
+@UI.headerInfo.title.type: #STANDARD
+@UI.headerInfo.title.value: 'Vutdate'
+@UI.headerInfo.description.type: #STANDARD
+@UI.headerInfo.description.value: 'Vutdate'
+annotate view ZC_BANKPAYABLE with
+{
+
+
+  
+  @EndUserText.label: 'Voucher Date'
+  @UI.facet: [ {
+    label: 'General Information', 
+    id: 'GeneralInfo', 
+    purpose: #STANDARD, 
+    position: 10 , 
+    type: #IDENTIFICATION_REFERENCE
+  } ]
+  
+  @UI.identification: [ {
+    position: 10
+  } ]
+  
+  @UI.lineItem: [ {
+    position: 10
+  } ]
+  
+  
+  @UI.selectionField: [ {
+    position: 10 
+  } ]
+  Vutdate;
+  
+  @EndUserText.label: 'Plant'
+  @UI.identification: [ {
+    position: 20
+  } ]
+  @UI.lineItem: [ {
+    position: 20
+  } ]
+  @UI.selectionField: [ {
+    position: 20 
+  } ]
+  Unit;
+  
+  @EndUserText.label: 'GL Account'
+  @UI.identification: [ {
+    position: 30
+  } ]
+  @UI.lineItem: [ {
+    position: 30
+  } ]
+  Vutacode;
+  
+  @EndUserText.label: 'Account Type'
+  @UI.identification: [ {
+    position: 40
+  } ]
+  @UI.lineItem: [ {
+    position: 40 
+  } ]
+  Vutatag;
+  
+  @EndUserText.label: 'Business Partner'
+  @UI.identification: [ {
+    position: 50 
+  } ]
+  @UI.lineItem: [ {
+    position: 50 
+  } ]
+  @UI.selectionField: [ {
+    position: 50 
+  } ]
+  Vutaacode;
+  
+  @EndUserText.label: 'Amount'
+  @UI.identification: [ {
+    position: 60 
+  } ]
+  @UI.lineItem: [ {
+    position: 60 
+  } ]
+  Vutamt;
+  
+  @EndUserText.label: 'Description'
+  @UI.identification: [ {
+    position: 70 
+  } ]
+  @UI.lineItem: [ {
+    position: 70
+  } ]
+  Custref;
+  
+  @EndUserText.label: 'Reference No'
+  @UI.identification: [ {
+    position: 80  
+  } ]
+  @UI.lineItem: [ {
+    position: 80 
+  } ]
+  Vutref;
+  
+  @EndUserText.label: 'Narration'
+  @UI.identification: [ {
+    position: 90 
+  } ]
+  @UI.lineItem: [ {
+    position: 90 
+  } ]
+  Vutnart;
+  
+  @EndUserText.label: 'Costing Head'
+  @UI.identification: [ {
+    position: 100
+  } ]
+  @UI.lineItem: [ {
+    position: 100 
+  } ]
+  Vutcostcd;
+  
+  @EndUserText.label: 'Budgeted Head'
+  @UI.identification: [ {
+    position: 110 
+  } ]
+  @UI.lineItem: [ {
+    position: 110 
+  } ]
+  Vutbgtcd;
+  
+  @EndUserText.label: 'Location Head'
+  @UI.identification: [ {
+    position: 120 
+  } ]
+  @UI.lineItem: [ {
+    position: 120 
+  } ]
+  Vutloccd;
+  
+  @EndUserText.label: 'Email'
+  @UI.identification: [ {
+    position: 130 
+  } ]
+  @UI.lineItem: [ {
+    position: 130
+  } ]
+  Vutemail;
+  
+  
+  @EndUserText.label: 'Transaction Type'
+  @UI.identification: [ {
+    position: 140 
+  } ]
+  @UI.lineItem: [ {
+    position: 140 
+  } ]
+  TransType;
+  
+  
+  @EndUserText.label: 'Log'
+  @UI.identification: [ {
+    position: 150 
+  } ]
+  @UI.lineItem: [ {
+    position: 150 
+  } ]
+  Log;
+  
+  @UI.hidden: true
+  UniqTracCode;
+  
+  @UI.hidden: true
+  InstructionRefNum;
+  
+  @EndUserText.label: 'Upload File Name'
+  @UI.identification: [ {
+    position: 160 
+  } ]
+  @UI.lineItem: [ {
+    position: 160 
+  } ]
+  UploadFileName;
+  
+  @EndUserText.label: 'UTR'
+  @UI.identification: [ {
+    position: 170 
+  } ]
+  @UI.lineItem: [ {
+    position: 170 
+  } ]
+  UTR;
+  
+  @EndUserText.label: 'Posting Date'
+  @UI.identification: [ {
+    position: 180 
+  } ]
+  @UI.lineItem: [ {
+    position: 180 
+  } ]
+  PostingDate;
+  
+  @EndUserText.label: 'Payment Status'
+  @UI.identification: [ {
+    position: 190 
+  } ]
+  @UI.lineItem: [ {
+    position: 190 
+  } ]
+  PayStatus;
+  
+  @UI.identification: [ {
+    position: 200 
+  } ]
+  @UI.lineItem: [ {
+    position: 200 
+  } ]
+  CreatedBy;
+  
+  @UI.identification: [ {
+    position: 210 
+  } ]
+  @UI.lineItem: [ {
+    position: 210 
+  } ]
+  CreatedAt;
+
+  @UI.hidden: true
+  LocalLastChangedBy;
+
+  @UI.hidden: true
+  LocalLastChangedAt;
+  
+  @UI.hidden: true
+  LastChangedAt;
+}

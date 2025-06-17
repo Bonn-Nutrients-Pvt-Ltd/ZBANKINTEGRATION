@@ -1,0 +1,34 @@
+{
+  "formatVersion": "1",
+  "header": {
+    "description": "bank publish",
+    "originalLanguage": "en",
+    "abapLanguageVersion": "cloudDevelopment"
+  },
+  "generalInformation": {
+    "appType": "ui5",
+    "catalogId": "SAP_TC_UI5_REPO_UIAD"
+  },
+  "ui5AppDetails": {
+    "appId": "zbankpublish"
+  },
+  "navigation": {
+    "targetMappingId": "UI5R_68DEFAB51F782EDBAE73230F9115FEB7BBF5DADB_TM",
+    "semanticObject": "zbankpublish",
+    "action": "bank_publish",
+    "desktop": true,
+    "tablet": true,
+    "phone": true
+  },
+  "tiles": [
+    {
+      "id": "UI5R_68DEFAB51F782EDBAE73230F9115FEB7BBF5DADB_AL",
+      "tileType": "static",
+      "isDefault": true,
+      "standard": {
+        "title": "bank publish",
+        "subtitle": "bp001"
+      }
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+managed implementation in class ZBP_R_BANKRECEIPT unique;
+strict ( 2 );
+define behavior for ZR_BANKRECEIPT alias ZrBankreceipt
+persistent table ZBANKRECEIPT
+etag master LocalLastChangedAt
+lock master
+authorization master( global )
+
+{
+  field ( readonly )
+   CreatedBy,
+   CreatedAt,
+   LocalLastChangedBy,
+   LocalLastChangedAt,
+   LastChangedAt;
+
+  field ( readonly : update )
+   Id;
+
+
+  create;
+  update;
+
+
+
+  action falsedelete;
+
+  mapping for ZBANKRECEIPT
+  {
+    Id = id;
+    Transactionid = transactionid;
+    Remittername = remittername;
+    Fromaccountnumber = fromaccountnumber;
+    Frombankname = frombankname;
+    Utr = utr;
+    Virtualaccount = virtualaccount;
+    Amount = amount;
+    Transfermode = transfermode;
+    Creditdatetime = creditdatetime;
+    Ipfrom = ipfrom;
+    Createon = createon;
+    AccountId = account_id;
+    CompanyCode = company_code;
+    Plant = plant;
+    Errorlog = errorlog;
+    AccountingDocument = accountingdocument;
+    Isdeleted = isdeleted;
+    Isposted = isposted;
+    CreatedBy = created_by;
+    CreatedAt = created_at;
+    LocalLastChangedBy = local_last_changed_by;
+    LocalLastChangedAt = local_last_changed_at;
+    LastChangedAt = last_changed_at;
+  }
+}

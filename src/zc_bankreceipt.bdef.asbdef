@@ -1,0 +1,11 @@
+projection;
+strict ( 2 );
+
+define behavior for ZC_BANKRECEIPT alias ZcBankreceipt
+use etag
+
+{
+
+
+  use action falsedelete;
+}

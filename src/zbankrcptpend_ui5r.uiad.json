@@ -1,0 +1,34 @@
+{
+  "formatVersion": "1",
+  "header": {
+    "description": "Bank Receipt Pending",
+    "originalLanguage": "en",
+    "abapLanguageVersion": "cloudDevelopment"
+  },
+  "generalInformation": {
+    "appType": "ui5",
+    "catalogId": "SAP_TC_UI5_REPO_UIAD"
+  },
+  "ui5AppDetails": {
+    "appId": "brpending"
+  },
+  "navigation": {
+    "targetMappingId": "UI5R_9E0655F297C0E67CDEB7E4FFAF83CAC327030543_TM",
+    "semanticObject": "zbankpending",
+    "action": "list",
+    "desktop": true,
+    "tablet": true,
+    "phone": true
+  },
+  "tiles": [
+    {
+      "id": "UI5R_9E0655F297C0E67CDEB7E4FFAF83CAC327030543_AL",
+      "tileType": "static",
+      "isDefault": true,
+      "standard": {
+        "title": "Bank Receipt Pending",
+        "subtitle": "ZBRPEND"
+      }
+    }
+  ]
+}

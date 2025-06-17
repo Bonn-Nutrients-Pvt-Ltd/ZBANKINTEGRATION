@@ -1,0 +1,34 @@
+{
+  "formatVersion": "1",
+  "header": {
+    "description": "BANK RECEIPT DELETE",
+    "originalLanguage": "en",
+    "abapLanguageVersion": "cloudDevelopment"
+  },
+  "generalInformation": {
+    "appType": "ui5",
+    "catalogId": "SAP_TC_UI5_REPO_UIAD"
+  },
+  "ui5AppDetails": {
+    "appId": "zbankreceiptdelete"
+  },
+  "navigation": {
+    "targetMappingId": "UI5R_25F3ED870C46DB987C95E047D48FBBADA581D6C3_TM",
+    "semanticObject": "ZBANKRECEIPTDELETE",
+    "action": "LIST",
+    "desktop": true,
+    "tablet": true,
+    "phone": true
+  },
+  "tiles": [
+    {
+      "id": "UI5R_25F3ED870C46DB987C95E047D48FBBADA581D6C3_AL",
+      "tileType": "static",
+      "isDefault": true,
+      "standard": {
+        "title": "BANK RECEIPT DELETE",
+        "subtitle": "ZBRDELETE"
+      }
+    }
+  ]
+}

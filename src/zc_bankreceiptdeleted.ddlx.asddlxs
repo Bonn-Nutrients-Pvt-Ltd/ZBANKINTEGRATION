@@ -1,0 +1,197 @@
+@Metadata.layer: #CORE
+@UI.headerInfo.title.type: #STANDARD
+@UI.headerInfo.title.value: 'Id'
+@UI.headerInfo.description.type: #STANDARD
+@UI.headerInfo.description.value: 'Transactionid'
+annotate entity ZC_BANKRECEIPTDELETED
+    with 
+{
+   @EndUserText.label: 'Id'
+  @UI.facet: [ {
+    label: 'General Information', 
+    id: 'GeneralInfo', 
+    purpose: #STANDARD, 
+    position: 10 , 
+    type: #IDENTIFICATION_REFERENCE
+  } ]
+@UI.identification: [ 
+  { position: 20,
+  label: 'Delete',
+  type: #FOR_ACTION,
+  invocationGrouping: #CHANGE_SET,
+  importance: #HIGH },{
+    position: 10
+  } ]
+  
+  @UI.lineItem: [ 
+  { position: 20,
+  label: 'Delete',
+  type: #FOR_ACTION,
+  invocationGrouping: #CHANGE_SET,
+  importance: #HIGH },{
+    position: 10
+  }  ]
+  
+  @UI.selectionField: [ {
+    position: 10 
+  } ]
+  Id;
+  
+  @EndUserText.label: 'Transaction Id'
+  @UI.identification: [ {
+    position: 20 
+  } ]
+  @UI.lineItem: [ {
+    position: 20
+  } ]
+    @UI.selectionField: [ {
+    position: 20 
+  } ]
+  Transactionid;
+  
+  @EndUserText.label: 'Remitter Name'
+  @UI.identification: [ {
+    position: 30 
+  } ]
+  @UI.lineItem: [ {
+    position: 30 
+  } ]
+  Remittername;
+  
+  @EndUserText.label: 'From Account Number'
+  @UI.identification: [ {
+    position: 40 
+  } ]
+  @UI.lineItem: [ {
+    position: 40 
+  } ]
+  Fromaccountnumber;
+  
+  @EndUserText.label: 'From Bank Name'
+  @UI.identification: [ {
+    position: 50 
+  } ]
+  @UI.lineItem: [ {
+    position: 50 
+  } ]
+  Frombankname;
+  
+  @EndUserText.label: 'UTR'
+  @UI.identification: [ {
+    position: 60
+  } ]
+  @UI.lineItem: [ {
+    position: 60 
+  } ]
+  Utr;
+  
+  @EndUserText.label: 'Virtual Cccount'
+  @UI.identification: [ {
+    position: 70
+  } ]
+  @UI.lineItem: [ {
+    position: 70 
+  } ]
+  Virtualaccount;
+  
+  @EndUserText.label: 'Amount'
+  @UI.identification: [ {
+    position: 80 
+  } ]
+  @UI.lineItem: [ {
+    position: 80 
+  } ]
+  Amount;
+  
+    @EndUserText.label: 'Amount Id'
+  @UI.identification: [ {
+    position: 90 
+  } ]
+  @UI.lineItem: [ {
+    position: 90 
+  } ]
+  AccountId;
+  
+  @EndUserText.label: 'Transfer Mode'
+  @UI.identification: [ {
+    position: 100 
+  } ]
+  @UI.lineItem: [ {
+    position: 100 
+  } ]
+  Transfermode;
+  
+  @EndUserText.label: 'Credit Date Time'
+  @UI.identification: [ {
+    position: 110
+  } ]
+  @UI.lineItem: [ {
+    position: 110 
+  } ]
+  Creditdatetime;
+  
+  @EndUserText.label: 'IP From'
+  @UI.identification: [ {
+    position: 120 
+  } ]
+  @UI.lineItem: [ {
+    position: 120
+  } ]
+  Ipfrom;
+  
+    @EndUserText.label: 'Company Code'
+  @UI.identification: [ {
+    position: 130 
+  } ]
+  @UI.lineItem: [ {
+    position: 130 
+  } ]
+  CompanyCode;
+  
+    @EndUserText.label: 'Accounting Document'
+  @UI.identification: [ {
+    position: 140 
+  } ]
+  @UI.lineItem: [ {
+    position: 140 
+  } ]
+  AccountingDocument;
+  
+     @EndUserText.label: 'Plant'
+  @UI.identification: [ {
+    position: 150 
+  } ]
+  @UI.lineItem: [ {
+    position: 150 
+  } ]
+  Plant;
+  
+  @EndUserText.label: 'Created On'
+  @UI.identification: [ {
+    position: 160 
+  } ]
+  @UI.lineItem: [ {
+    position: 160 
+  } ]
+  Createon;
+  
+ 
+  @UI.hidden: true
+  CreatedBy;
+  
+ 
+  @UI.hidden: true
+  CreatedAt;
+  
+ 
+  @UI.hidden: true
+  LocalLastChangedBy;
+  
+  
+  @UI.hidden: true
+  LocalLastChangedAt;
+  
+  @UI.hidden: true
+  LastChangedAt;
+    
+}

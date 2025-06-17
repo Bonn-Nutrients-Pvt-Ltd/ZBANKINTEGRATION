@@ -1,0 +1,34 @@
+{
+  "formatVersion": "1",
+  "header": {
+    "description": "RECIEPT POSTING",
+    "originalLanguage": "en",
+    "abapLanguageVersion": "cloudDevelopment"
+  },
+  "generalInformation": {
+    "appType": "ui5",
+    "catalogId": "SAP_TC_UI5_REPO_UIAD"
+  },
+  "ui5AppDetails": {
+    "appId": "zbankpublish"
+  },
+  "navigation": {
+    "targetMappingId": "UI5R_FBF3506187D5163710D3510C7D482D19FF6CB568_TM",
+    "semanticObject": "zbankpublish",
+    "action": "Display",
+    "desktop": true,
+    "tablet": true,
+    "phone": true
+  },
+  "tiles": [
+    {
+      "id": "UI5R_FBF3506187D5163710D3510C7D482D19FF6CB568_AL",
+      "tileType": "static",
+      "isDefault": true,
+      "standard": {
+        "title": "RECIEPT POSTING",
+        "subtitle": "ZBRP"
+      }
+    }
+  ]
+}

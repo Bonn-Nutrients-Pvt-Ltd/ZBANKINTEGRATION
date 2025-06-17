@@ -1,0 +1,34 @@
+{
+  "formatVersion": "1",
+  "header": {
+    "description": "BANK RECEIPT POST",
+    "originalLanguage": "en",
+    "abapLanguageVersion": "cloudDevelopment"
+  },
+  "generalInformation": {
+    "appType": "ui5",
+    "catalogId": "SAP_TC_UI5_REPO_UIAD"
+  },
+  "ui5AppDetails": {
+    "appId": "zbankreceiptpost"
+  },
+  "navigation": {
+    "targetMappingId": "UI5R_1488709924A8BE79CC8C6DDFD859209CC1DC7B7A_TM",
+    "semanticObject": "ZBANKRECEIPTPOST",
+    "action": "list",
+    "desktop": true,
+    "tablet": true,
+    "phone": true
+  },
+  "tiles": [
+    {
+      "id": "UI5R_1488709924A8BE79CC8C6DDFD859209CC1DC7B7A_AL",
+      "tileType": "static",
+      "isDefault": true,
+      "standard": {
+        "title": "BANK RECEIPT POST",
+        "subtitle": "ZBRPOST"
+      }
+    }
+  ]
+}

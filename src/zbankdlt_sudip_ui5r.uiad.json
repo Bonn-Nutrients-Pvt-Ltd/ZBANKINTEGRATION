@@ -1,0 +1,34 @@
+{
+  "formatVersion": "1",
+  "header": {
+    "description": "BANK DELETE",
+    "originalLanguage": "en",
+    "abapLanguageVersion": "cloudDevelopment"
+  },
+  "generalInformation": {
+    "appType": "ui5",
+    "catalogId": "SAP_TC_UI5_REPO_UIAD"
+  },
+  "ui5AppDetails": {
+    "appId": "zbankdelete"
+  },
+  "navigation": {
+    "targetMappingId": "UI5R_5F83B5CAC87EE4A25B7A3007E616573D20F451E7_TM",
+    "semanticObject": "zbankDelete",
+    "action": "bankdelete",
+    "desktop": true,
+    "tablet": true,
+    "phone": true
+  },
+  "tiles": [
+    {
+      "id": "UI5R_5F83B5CAC87EE4A25B7A3007E616573D20F451E7_AL",
+      "tileType": "static",
+      "isDefault": true,
+      "standard": {
+        "title": "BANK DELETE",
+        "subtitle": "BD"
+      }
+    }
+  ]
+}
