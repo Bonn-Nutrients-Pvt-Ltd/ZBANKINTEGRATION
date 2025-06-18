@@ -26,7 +26,7 @@ sap.ui.define([
 
                 this.oDataModel.create("/falsedelete2", {}, {
                     urlParameters: {
-                        "Vutdate": `${element.Vutdate}'`,
+                        "Vutdate": `'${element.Vutdate}'`,
                         "Unit": `'${element.Unit}'`,
                         "Vutacode": `'${element.Vutacode}'`,
                         "Createdtime": `time'PT${Math.floor(element.Createdtime.ms / 3600000)}H${Math.floor(element.Createdtime.ms / 60000) % 60}M${Math.floor(element.Createdtime.ms / 1000) % 60}S'`
