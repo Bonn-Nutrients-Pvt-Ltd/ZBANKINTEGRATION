@@ -1,0 +1,34 @@
+{
+  "formatVersion": "1",
+  "header": {
+    "description": "Bank Payable Delete",
+    "originalLanguage": "en",
+    "abapLanguageVersion": "cloudDevelopment"
+  },
+  "generalInformation": {
+    "appType": "ui5",
+    "catalogId": "SAP_TC_UI5_REPO_UIAD"
+  },
+  "ui5AppDetails": {
+    "appId": "zbankpayabledelete"
+  },
+  "navigation": {
+    "targetMappingId": "UI5R_0DEC4F6BF986F8A87CF9EEBF86D89A7BCA121494_TM",
+    "semanticObject": "ZBANKPAYABLEDEL",
+    "action": "List",
+    "desktop": true,
+    "tablet": true,
+    "phone": true
+  },
+  "tiles": [
+    {
+      "id": "UI5R_0DEC4F6BF986F8A87CF9EEBF86D89A7BCA121494_AL",
+      "tileType": "static",
+      "isDefault": true,
+      "standard": {
+        "title": "Bank Payable Delete",
+        "subtitle": "ZBPAYDEL"
+      }
+    }
+  ]
+}

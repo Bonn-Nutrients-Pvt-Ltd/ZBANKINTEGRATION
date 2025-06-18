@@ -1,0 +1,34 @@
+{
+  "formatVersion": "1",
+  "header": {
+    "description": "Bank Payable Post",
+    "originalLanguage": "en",
+    "abapLanguageVersion": "cloudDevelopment"
+  },
+  "generalInformation": {
+    "appType": "ui5",
+    "catalogId": "SAP_TC_UI5_REPO_UIAD"
+  },
+  "ui5AppDetails": {
+    "appId": "zbankpayablepost"
+  },
+  "navigation": {
+    "targetMappingId": "UI5R_D0724FD5A32B00281DD06040D498B54FB10629B8_TM",
+    "semanticObject": "ZBANKPAYABLEPOST",
+    "action": "List",
+    "desktop": true,
+    "tablet": true,
+    "phone": true
+  },
+  "tiles": [
+    {
+      "id": "UI5R_D0724FD5A32B00281DD06040D498B54FB10629B8_AL",
+      "tileType": "static",
+      "isDefault": true,
+      "standard": {
+        "title": "Bank Payable Post",
+        "subtitle": "ZBPAYPOST"
+      }
+    }
+  ]
+}

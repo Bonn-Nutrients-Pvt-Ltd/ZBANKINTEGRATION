@@ -34,6 +34,8 @@ CLASS ZCL_HTTP_BANKPAYABLEDNLD IMPLEMENTATION.
 
     SELECT * FROM zr_bankpayable
       WHERE UploadFileName = @file_name
+            AND IsDeleted = ''
+            AND IsPosted = ''
       INTO TABLE @DATA(lt_bankpayable).
 
     LOOP AT lt_bankpayable INTO DATA(ls_bankpayable).

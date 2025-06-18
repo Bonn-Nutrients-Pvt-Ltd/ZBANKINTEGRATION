@@ -4,4 +4,6 @@ define service ZUI_BANKINTEGRATION {
   expose ZC_BANKRECEIPT        as BankReceipt;
   expose ZC_BANKRECEIPTPOSTED  as BankReceiptPost;
   expose ZC_BANKRECEIPTDELETED as BankReceiptDelete;
+  expose ZC_BANKPAYABLEDELETED as BankPayableDelete;
+  expose ZC_BANKPAYABLEPOSTED  as BankPayablePost;
 }

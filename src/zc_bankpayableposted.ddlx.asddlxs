@@ -1,0 +1,150 @@
+@Metadata.layer: #CORE
+@UI.headerInfo.title.type: #STANDARD
+@UI.headerInfo.title.value: 'Vutdate'
+@UI.headerInfo.description.type: #STANDARD
+@UI.headerInfo.description.value: 'Unit'
+annotate entity ZC_BANKPAYABLEPOSTED
+    with 
+{
+  @EndUserText.label: 'Vut Date'
+  @UI.facet: [ {
+    label: 'General Information', 
+    id: 'GeneralInfo', 
+    purpose: #STANDARD, 
+    position: 10 , 
+    type: #IDENTIFICATION_REFERENCE
+  } ]
+  @UI.identification: [ { position: 10 } ]
+  @UI.selectionField: [ { position: 10 } ]
+  @UI.lineItem: [ { position: 10 } ]
+  Vutdate;
+
+  @EndUserText.label: 'Unit'
+  @UI.identification: [ { position: 20 } ]
+  @UI.selectionField: [ { position: 20 } ]
+  @UI.lineItem: [ { position: 20 } ]
+  Unit;
+
+  @EndUserText.label: 'Vut A Code'
+  @UI.identification: [ { position: 30 } ]
+  @UI.selectionField: [ { position: 30 } ]
+  @UI.lineItem: [ { position: 30 } ]
+  Vutacode;
+  
+  @EndUserText.label: 'Accounting Document'
+  @UI.identification: [ { position: 30 } ]
+  @UI.selectionField: [ { position: 30 } ]
+  @UI.lineItem: [ { position: 30 } ]
+  AccountingDocument;
+
+  @EndUserText.label: 'Created Time'
+  @UI.identification: [ { position: 40 } ]
+  @UI.selectionField: [ { position: 40 } ]
+  @UI.lineItem: [ { position: 40 } ]
+  Createdtime;
+
+  @EndUserText.label: 'Vut Atag'
+  @UI.identification: [ { position: 50 } ]
+  @UI.lineItem: [ { position: 50 } ]
+  Vutatag;
+
+  @EndUserText.label: 'Transaction Type'
+  @UI.identification: [ { position: 60 } ]
+  @UI.lineItem: [ { position: 60 } ]
+  TransType;
+
+  @EndUserText.label: 'Vut Aa Code'
+  @UI.identification: [ { position: 70 } ]
+  @UI.lineItem: [ { position: 70 } ]
+  Vutaacode;
+
+  @EndUserText.label: 'Vut Amount'
+  @UI.identification: [ { position: 80 } ]
+  @UI.lineItem: [ { position: 80 } ]
+  Vutamt;
+
+  @EndUserText.label: 'Customer Reference'
+  @UI.identification: [ { position: 90 } ]
+  @UI.lineItem: [ { position: 90 } ]
+  Custref;
+
+  @EndUserText.label: 'Vut Reference'
+  @UI.identification: [ { position: 100 } ]
+  @UI.lineItem: [ { position: 100 } ]
+  Vutref;
+
+  @EndUserText.label: 'Vut Narration'
+  @UI.identification: [ { position: 110 } ]
+  @UI.lineItem: [ { position: 110 } ]
+  Vutnart;
+
+  @EndUserText.label: 'Vut Cost Code'
+  @UI.identification: [ { position: 120 } ]
+  @UI.lineItem: [ { position: 120 } ]
+  Vutcostcd;
+
+  @EndUserText.label: 'Vut Budget Code'
+  @UI.identification: [ { position: 130 } ]
+  @UI.lineItem: [ { position: 130 } ]
+  Vutbgtcd;
+
+  @EndUserText.label: 'Vut Location Code'
+  @UI.identification: [ { position: 140 } ]
+  @UI.lineItem: [ { position: 140 } ]
+  Vutloccd;
+
+  @EndUserText.label: 'Vut Email'
+  @UI.identification: [ { position: 150 } ]
+  @UI.lineItem: [ { position: 150 } ]
+  Vutemail;
+
+  @EndUserText.label: 'UTR'
+  @UI.identification: [ { position: 160 } ]
+  @UI.lineItem: [ { position: 160 } ]
+  UTR;
+
+  @EndUserText.label: 'Posting Date'
+  @UI.identification: [ { position: 170 } ]
+  @UI.lineItem: [ { position: 170 } ]
+  PostingDate;
+
+  @EndUserText.label: 'Payment Status'
+  @UI.identification: [ { position: 180 } ]
+  @UI.lineItem: [ { position: 180 } ]
+  PayStatus;
+
+  @EndUserText.label: 'Log'
+  @UI.identification: [ { position: 190 } ]
+  @UI.lineItem: [ { position: 190 } ]
+  Log;
+
+  @EndUserText.label: 'Instruction Reference Number'
+  @UI.identification: [ { position: 200 } ]
+  @UI.lineItem: [ { position: 200 } ]
+  InstructionRefNum;
+
+  @EndUserText.label: 'Unique Track Code'
+  @UI.identification: [ { position: 210 } ]
+  @UI.lineItem: [ { position: 210 } ]
+  UniqTracCode;
+
+  @EndUserText.label: 'Upload File Name'
+  @UI.identification: [ { position: 220 } ]
+  @UI.lineItem: [ { position: 220 } ]
+  UploadFileName;
+
+  @UI.hidden: true
+  CreatedBy;
+
+  @UI.hidden: true
+  CreatedAt;
+
+  @UI.hidden: true
+  LocalLastChangedBy;
+
+  @UI.hidden: true
+  LocalLastChangedAt;
+
+  @UI.hidden: true
+  LastChangedAt;
+}

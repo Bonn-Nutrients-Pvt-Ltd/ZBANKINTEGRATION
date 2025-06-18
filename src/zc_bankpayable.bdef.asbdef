@@ -5,9 +5,6 @@ define behavior for ZC_BANKPAYABLE alias ZcBankpayable
 use etag
 
 {
-  use create;
-  use update;
-  use delete;
-  use action falsedelete;
+  use action falsedelete2;
 
 }

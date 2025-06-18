@@ -21,7 +21,7 @@ annotate view ZC_BANKPAYABLE with
   { position: 20,
   label: 'Delete',
   type: #FOR_ACTION,
-  dataAction: 'falsedelete',
+  dataAction: 'falsedelete2',
   invocationGrouping: #CHANGE_SET,
   importance: #HIGH },{
     position: 10
@@ -30,7 +30,7 @@ annotate view ZC_BANKPAYABLE with
   { position: 20,
   label: 'Delete',
   type: #FOR_ACTION,
-  dataAction: 'falsedelete',
+  dataAction: 'falsedelete2',
   invocationGrouping: #CHANGE_SET,
   importance: #HIGH },{
     position: 10

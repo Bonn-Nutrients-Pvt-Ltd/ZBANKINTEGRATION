@@ -1,11 +1,19 @@
-@Metadata.allowExtensions: true
-@EndUserText.label: '###GENERATED Core Data Service Entity'
+@AbapCatalog.viewEnhancementCategory: [#NONE]
 @AccessControl.authorizationCheck: #NOT_REQUIRED
-define root view entity ZC_BANKPAYABLE
-  provider contract transactional_query
+@EndUserText.label: 'Posted Bank Payable'
+@Metadata.allowExtensions: true
+@Metadata.ignorePropagatedAnnotations: true
+@ObjectModel.usageType:{
+    serviceQuality: #X,
+    sizeCategory: #S,
+    dataClass: #MIXED
+}
+define root view entity ZC_BANKPAYABLEPOSTED   
+    provider contract transactional_query
   as projection on ZR_BANKPAYABLE
 {
-  key Vutdate,
+    
+    key Vutdate,
   key Unit,
   key Vutacode,
   key Createdtime,
@@ -15,6 +23,7 @@ define root view entity ZC_BANKPAYABLE
   Vutamt,
   Custref,
   Vutref,
+  AccountingDocument,
   Vutnart,
   Vutcostcd,
   Vutbgtcd,
@@ -32,5 +41,6 @@ define root view entity ZC_BANKPAYABLE
   LocalLastChangedBy,
   LocalLastChangedAt,
   LastChangedAt
+  
 }
-where IsPosted = '' and IsDeleted = '';
+where IsPosted = 'X' and IsDeleted = ''

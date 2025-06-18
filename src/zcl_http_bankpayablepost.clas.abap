@@ -152,10 +152,12 @@ CLASS ZCL_HTTP_BANKPAYABLEPOST IMPLEMENTATION.
         WHERE plant_code = @wa_data-Unit
         INTO @DATA(ls_company).
 
-        SELECT SINGLE FROM I_HouseBankAccountLinkage
-        FIELDS HouseBank, HouseBankAccount
-        WHERE CompanyCode = @ls_company-comp_code
-        INTO @DATA(ls_housebank).
+        SELECT SINGLE FROM zbrstable
+          FIELDS  acc_id AS HouseBankAccount, house_bank AS HouseBank
+          WHERE out_gl = @wa_data-Vutacode
+                  AND comp_code = @ls_company-comp_code
+          INTO @DATA(ls_housebank).
+
 
         APPEND INITIAL LINE TO lt_je_deep ASSIGNING FIELD-SYMBOL(<je_deep>).
         <je_deep>-%cid = getCid(  ).

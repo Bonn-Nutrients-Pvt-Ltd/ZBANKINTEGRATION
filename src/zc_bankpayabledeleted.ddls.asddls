@@ -1,8 +1,8 @@
-@Metadata.allowExtensions: true
-@EndUserText.label: '###GENERATED Core Data Service Entity'
 @AccessControl.authorizationCheck: #NOT_REQUIRED
-define root view entity ZC_BANKPAYABLE
-  provider contract transactional_query
+@EndUserText.label: 'DELETED BANK PAYABLE'
+@Metadata.ignorePropagatedAnnotations: true
+@Metadata.allowExtensions: true
+define root view entity ZC_BANKPAYABLEDELETED provider contract transactional_query
   as projection on ZR_BANKPAYABLE
 {
   key Vutdate,
@@ -33,4 +33,4 @@ define root view entity ZC_BANKPAYABLE
   LocalLastChangedAt,
   LastChangedAt
 }
-where IsPosted = '' and IsDeleted = '';
+where IsPosted = '' and IsDeleted = 'X'
