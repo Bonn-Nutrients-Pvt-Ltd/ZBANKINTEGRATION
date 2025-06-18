@@ -24,7 +24,7 @@ sap.ui.define([
 
                 if (!element) continue;
 
-                this.oDataModel.create("/falsedelete", {}, {
+                this.oDataModel.create("/falsedelete2", {}, {
                     urlParameters: {
                         "Vutdate": `${element.Vutdate}'`,
                         "Unit": `'${element.Unit}'`,
