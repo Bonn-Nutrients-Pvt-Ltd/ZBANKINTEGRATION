@@ -29,7 +29,9 @@ sap.ui.define([
                         "Vutdate": `${element.Vutdate}'`,
                         "Unit": `'${element.Unit}'`,
                         "Vutacode": `'${element.Vutacode}'`,
-                        "Createdtime": this.msToHHMMSS(parseInt(element.Createdtime.ms))
+                        "Createdtime": `time'PT${Math.floor(element.Createdtime.ms / 3600000)}H${Math.floor(element.Createdtime.ms / 60000) % 60}M${Math.floor(element.Createdtime.ms / 1000) % 60}S'`
+
+                        // "Createdtime": this.msToHHMMSS(parseInt(element.Createdtime.ms))
                     },
                     headers: {
                         "If-Match": "*"
@@ -62,8 +64,8 @@ sap.ui.define([
                 method: "POST",
                 contentType: "application/json",
                 data: JSON.stringify(data),
-                success: function () {
-                    MessageToast.show(data);
+                success: function (result) {
+                    MessageToast.show(result);
                     that.byId("_IDGenSmartTable").rebindTable(true);
                 },
                 error: function (error) {
@@ -163,6 +165,7 @@ sap.ui.define([
         },
         onClickDownload() {
             var formData = new FormData();
+            let that = this;
             formData.append("filename", this.byId("_IDGenInput").getValue());
             BusyIndicator.show(0);
             $.ajax({
@@ -184,7 +187,7 @@ sap.ui.define([
                     link.click();
                     document.body.removeChild(link);
                     BusyIndicator.hide();
-                    this.byId("_IDGenDialog").close();
+                    that.byId("_IDGenDialog").close();
                 },
                 error: function () {
                     BusyIndicator.hide();
@@ -255,6 +258,7 @@ sap.ui.define([
             }
         },
         onUploadFile: function () {
+            let that = this;
             if (!this.file) {
                 MessageToast.show("Please select a CSV file.");
                 return;
@@ -275,7 +279,7 @@ sap.ui.define([
                         success: function (response) {
                             MessageToast.show(response);
                             that.byId("_IDGenSmartTable").rebindTable(true);
-                            this.byId("uploadDialog").close();
+                            that.byId("uploadDialog").close();
                         },
                         error: function (error) {
                             MessageToast.show("Upload failed: " + (error.responseText || "Unknown error"));
@@ -289,8 +293,6 @@ sap.ui.define([
             } else {
                 MessageToast.show("FileReader is not supported in this browser.");
             }
-            var that = this;
-
         },
         processCSVData: function (data) {
             var lines = data.split("\n");
