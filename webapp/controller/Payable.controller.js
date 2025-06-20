@@ -29,7 +29,8 @@ sap.ui.define([
                         "Vutdate": `'${element.Vutdate}'`,
                         "Unit": `'${element.Unit}'`,
                         "Vutacode": `'${element.Vutacode}'`,
-                        "Createdtime": `time'PT${Math.floor(element.Createdtime.ms / 3600000)}H${Math.floor(element.Createdtime.ms / 60000) % 60}M${Math.floor(element.Createdtime.ms / 1000) % 60}S'`
+                        "Createdtime": `time'PT${Math.floor(element.Createdtime.ms / 3600000)}H${Math.floor(element.Createdtime.ms / 60000) % 60}M${Math.floor(element.Createdtime.ms / 1000) % 60}S'`,
+                        "InstructionRefNum":`'${element.InstructionRefNum}'`
 
                         // "Createdtime": this.msToHHMMSS(parseInt(element.Createdtime.ms))
                     },
@@ -55,7 +56,8 @@ sap.ui.define([
                     "Vutdate": element.Vutdate,
                     "Unit": element.Unit,
                     "Vutacode": element.Vutacode,
-                    "Createdtime": this.msToHHMMSS(parseInt(element.Createdtime.ms))
+                    "Createdtime": this.msToHHMMSS(parseInt(element.Createdtime.ms)),
+                    "InstructionRefNum":element.InstructionRefNum
                 }
             })
 
@@ -69,6 +71,7 @@ sap.ui.define([
                     that.byId("_IDGenSmartTable").rebindTable(true);
                 },
                 error: function (error) {
+                    that.byId("_IDGenSmartTable").rebindTable(true);
                     MessageToast.show("Upload failed: " + (error || "Unknown error"));
                 }
             });

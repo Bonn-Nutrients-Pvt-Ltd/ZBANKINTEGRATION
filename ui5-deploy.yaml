@@ -21,6 +21,6 @@ builder:
           name: ZBANKPAYPOST
           description: Bank Payable Posting
           package: ZBANKINTEGRATION
-          transport: NXSK902115
+          transport: NXSK902554
         exclude:
           - /test/

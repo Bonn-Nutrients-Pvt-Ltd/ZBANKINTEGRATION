@@ -56,7 +56,7 @@
             useVariantManagement="true"
             useTablePersonalisation="true"
             enableAutoColumnWidth="true"
-            initiallyVisibleFields="Vutaacode,Unit,Vutdate,Createdtime,Vutatag,Vutacode,CreatedTime,Vutamt,Custref,Vutref,Vutnart,Vutcostcd,Vutbgtcd,Vutloccd,Vutemail"
+            initiallyVisibleFields="Vutaacode,Unit,Vutdate,Createdtime,InstructionRefNum,Vutatag,Vutacode,CreatedTime,Vutamt,Custref,Vutref,Vutnart,Vutcostcd,Vutbgtcd,Vutloccd,Vutemail"
             width="100%"
         >
             <smartTable:customToolbar>
