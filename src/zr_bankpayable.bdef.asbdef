@@ -19,6 +19,7 @@ authorization master( global )
    Vutdate,
    Unit,
    Createdtime,
+   InstructionRefNum,
    Vutacode;
 
 

@@ -12,12 +12,13 @@ ENDCLASS.
 
 
 
-CLASS zbanktestclass IMPLEMENTATION.
+CLASS ZBANKTESTCLASS IMPLEMENTATION.
+
 
     METHOD if_oo_adt_classrun~main.
       DATA(filename) = ''.
       IF filename IS NOT INITIAL.
-        DELETE FROM zbankpayable.
+        DELETE FROM zbankpayable where uploadfilename = @filename.
       ENDIF.
     ENDMETHOD.
 ENDCLASS.

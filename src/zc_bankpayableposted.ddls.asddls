@@ -13,10 +13,11 @@ define root view entity ZC_BANKPAYABLEPOSTED
   as projection on ZR_BANKPAYABLE
 {
     
-    key Vutdate,
+  key Vutdate,
   key Unit,
   key Vutacode,
   key Createdtime,
+  key InstructionRefNum,
   Vutatag,
   TransType,
   Vutaacode,
@@ -33,7 +34,6 @@ define root view entity ZC_BANKPAYABLEPOSTED
   PostingDate,          
   PayStatus,
   Log,        
-  InstructionRefNum,
   UniqTracCode,
   UploadFileName,
   CreatedBy,

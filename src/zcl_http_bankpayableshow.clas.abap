@@ -26,6 +26,7 @@ CLASS ZCL_HTTP_BANKPAYABLESHOW IMPLEMENTATION.
     ENDCASE.
   ENDMETHOD.
 
+
   METHOD saveData.
 
     DATA(filename) = request->get_header_field( 'filename' ).
@@ -70,6 +71,8 @@ CLASS ZCL_HTTP_BANKPAYABLESHOW IMPLEMENTATION.
                Vutdate = ls_bankpayable-Vutdate
                Unit = ls_bankpayable-Unit
                Vutacode = ls_bankpayable-Vutacode
+               InstructionRefNum = ls_bankpayable-InstructionRefNum
+
              ) )
            FAILED DATA(lt_failed)
            REPORTED DATA(lt_reported).
@@ -83,5 +86,4 @@ CLASS ZCL_HTTP_BANKPAYABLESHOW IMPLEMENTATION.
       ENDIF.
     ENDLOOP.
   ENDMETHOD.
-
 ENDCLASS.

@@ -20,14 +20,6 @@ ENDCLASS.
 CLASS ZCL_HTTP_BANKPAYABLEDNLD IMPLEMENTATION.
 
 
-  METHOD IF_HTTP_SERVICE_EXTENSION~HANDLE_REQUEST.
-   CASE request->get_method(  ).
-      WHEN CONV string( if_web_http_client=>post ).
-        response->set_text( getDataForCSV( request ) ).
-    ENDCASE.
-  ENDMETHOD.
-
-
   METHOD getDataForCSV.
 
     DATA(file_name) = request->get_form_field( i_name = 'filename' ).
@@ -49,10 +41,27 @@ CLASS ZCL_HTTP_BANKPAYABLEDNLD IMPLEMENTATION.
           WHERE BusinessPartner = @ls_bankpayable-Vutaacode
           INTO @DATA(ls_businesspartnerbank).
 
-      message = |{ message }{ ls_bankpayable-TransType },{ ls_bankpayable-Vutaacode },{ ls_businesspartnerbank-beneficiaryaccount },{ ls_bankpayable-Vutamt },| &&
+      DATA benficiary TYPE string.
+      IF ls_bankpayable-TransType = 'I'.
+        benficiary = ls_businesspartnerbank-beneficiaryaccount.
+      ELSE.
+        benficiary = ''.
+      ENDIF.
+
+      DATA(message2) = |{ ls_bankpayable-TransType },{ benficiary },{ ls_businesspartnerbank-beneficiaryaccount },{ ls_bankpayable-Vutamt },| &&
                   |{ ls_businesspartnerbank-beneficiaryname },,,,,,,,{ ls_bankpayable-InstructionRefNum },{ ls_bankpayable-Custref },{ ls_bankpayable-Vutref },{ ls_bankpayable-UniqTracCode },,,,,,,{ ls_bankpayable-Vutdate },,| &&
                   |{ ls_businesspartnerbank-ifsccode },{ ls_businesspartnerbank-BankName },{ ls_businesspartnerbank-BankBranch },"{ ls_bankpayable-Vutemail }"\n|.
+
+      CONCATENATE message message2 INTO message.
+
     ENDLOOP.
   ENDMETHOD.
 
+
+  METHOD IF_HTTP_SERVICE_EXTENSION~HANDLE_REQUEST.
+   CASE request->get_method(  ).
+      WHEN CONV string( if_web_http_client=>post ).
+        response->set_text( getDataForCSV( request ) ).
+    ENDCASE.
+  ENDMETHOD.
 ENDCLASS.

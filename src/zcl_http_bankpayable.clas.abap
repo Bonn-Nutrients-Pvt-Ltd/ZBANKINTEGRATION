@@ -30,6 +30,50 @@ ENDCLASS.
 CLASS ZCL_HTTP_BANKPAYABLE IMPLEMENTATION.
 
 
+    METHOD checkDateFormat.
+
+    DATA: lv_date_parts TYPE TABLE OF string.
+    TRY.
+        SPLIT date AT '/' INTO  DATA(lv_date_parts1) DATA(lv_date_parts2) DATA(lv_date_parts3) .
+        message = lv_date_parts3 && lv_date_parts2 && lv_date_parts1.
+      CATCH cx_sy_itab_line_not_found.
+        message = |Invalid Document date format: { date }|.
+        RETURN.
+    ENDTRY.
+  ENDMETHOD.
+
+
+  METHOD getCID.
+    TRY.
+        cid = to_upper( cl_uuid_factory=>create_system_uuid( )->create_uuid_x16( ) ).
+      CATCH cx_uuid_error.
+        ASSERT 1 = 0.
+    ENDTRY.
+  ENDMETHOD.
+
+
+  METHOD getLastUniq.
+
+
+    SELECT FROM zr_bankpayable
+      FIELDS instructionrefnum
+      WHERE instructionrefnum IS NOT INITIAL
+      INTO TABLE @DATA(last_record).
+
+    max_num = REDUCE #( INIT max = CONV posnr( '000000' )
+                FOR line IN last_record
+                    NEXT max = COND posnr( WHEN line-InstructionRefNum > max
+                                           THEN line-InstructionRefNum
+                                           ELSE max )
+              ).
+
+    IF max_num EQ '000000'.
+      max_num = '100001'.
+    ELSE.
+      max_num += 1.
+    ENDIF.
+  ENDMETHOD.
+
 
   method IF_HTTP_SERVICE_EXTENSION~HANDLE_REQUEST.
   CASE request->get_method(  ).
@@ -69,11 +113,12 @@ CLASS ZCL_HTTP_BANKPAYABLE IMPLEMENTATION.
           DATA code TYPE c LENGTH 1.
           DATA lv_max_refnum TYPE i.
           DATA(cid) = getcid( ).
+          DATA(Vutaacode) = |{ wa-vutaacode ALPHA = IN }|.
 
 
           SELECT SINGLE FROM I_businesspartnerbank
           FIELDS BankNumber
-          WHERE BusinessPartner = @wa-Vutacode
+          WHERE BusinessPartner = @Vutaacode
           INTO @DATA(bank).
 
 *          IF bank IS INITIAL.
@@ -120,8 +165,8 @@ CLASS ZCL_HTTP_BANKPAYABLE IMPLEMENTATION.
                  %cid = cid
                  Vutdate = wa-vutdate
                  Unit = wa-unit
-                 Createdtime = cl_abap_context_info=>get_system_time( )
                  Vutacode = wa-vutacode
+                 Createdtime = cl_abap_context_info=>get_system_time( )
                  Vutatag = wa-vutatag
                  Vutaacode = wa-vutaacode
                  Vutamt = wa-vutamt
@@ -160,47 +205,5 @@ CLASS ZCL_HTTP_BANKPAYABLE IMPLEMENTATION.
     ENDTRY.
 
 
-  ENDMETHOD.
-
-  METHOD getLastUniq.
-
-
-    SELECT FROM zr_bankpayable
-      FIELDS instructionrefnum
-      INTO TABLE @DATA(last_record).
-
-    max_num = REDUCE #( INIT max = CONV posnr( '000000' )
-                FOR line IN last_record
-                    NEXT max = COND posnr( WHEN line-InstructionRefNum > max
-                                           THEN line-InstructionRefNum
-                                           ELSE max )
-              ).
-
-    IF max_num EQ '000000'.
-      max_num = '100001'.
-    ELSE.
-      max_num += 1.
-    ENDIF.
-  ENDMETHOD.
-
-    METHOD checkDateFormat.
-
-    DATA: lv_date_parts TYPE TABLE OF string.
-    TRY.
-        SPLIT date AT '/' INTO  DATA(lv_date_parts1) DATA(lv_date_parts2) DATA(lv_date_parts3) .
-        message = lv_date_parts3 && lv_date_parts2 && lv_date_parts1.
-      CATCH cx_sy_itab_line_not_found.
-        message = |Invalid Document date format: { date }|.
-        RETURN.
-    ENDTRY.
-  ENDMETHOD.
-
-
-  METHOD getCID.
-    TRY.
-        cid = to_upper( cl_uuid_factory=>create_system_uuid( )->create_uuid_x16( ) ).
-      CATCH cx_uuid_error.
-        ASSERT 1 = 0.
-    ENDTRY.
   ENDMETHOD.
 ENDCLASS.

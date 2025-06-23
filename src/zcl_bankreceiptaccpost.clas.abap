@@ -37,77 +37,48 @@ ENDCLASS.
 
 
 
-CLASS zcl_bankreceiptaccpost IMPLEMENTATION.
+CLASS ZCL_BANKRECEIPTACCPOST IMPLEMENTATION.
 
 
-  METHOD if_http_service_extension~handle_request.
-    CASE request->get_method(  ).
-      WHEN CONV string( if_web_http_client=>post ).
-        response->set_text( postData( request ) ).
-    ENDCASE.
-  ENDMETHOD.
+  METHOD checkDateFormat.
 
+    DATA: lv_match TYPE i.
+    DATA: lv_date_parts TYPE TABLE OF string.
 
-  METHOD postData.
+    FIND REGEX '^\d{2}-\d{2}-\d{4}$'  IN date.
 
-    DATA: lv_oipaym TYPE TABLE OF zr_oipayments,
-          wa_oipaym TYPE zr_oipayments.
+    IF sy-subrc = 0.
+      lv_match = 1.
+    ELSE.
+      lv_match = 0.
+    ENDIF.
 
-    TYPES: BEGIN OF ty_json_structure,
-             Id TYPE i,
-           END OF ty_json_structure.
+    FIND REGEX '^\d{4}-\d{2}-\d{2}$'  IN date.
+    IF sy-subrc = 0.
+      lv_match = 2.
+    ENDIF.
 
-    DATA tt_json_structure TYPE TABLE OF ty_json_structure WITH EMPTY KEY.
-
-    TRY.
-
-        xco_cp_json=>data->from_string( request->get_text( ) )->write_to( REF #( tt_json_structure ) ).
-
-        LOOP AT tt_json_structure INTO DATA(wa).
-
-          SELECT SINGLE * FROM zr_bankreceipt
-          WHERE Id = @wa-Id
-             INTO @DATA(wa_data).
-
-          wa_data-Creditdatetime = wa_data-Creditdatetime+0(10).
-
-          DATA(psDate) = checkDateFormat( date = CONV string( wa_data-Creditdatetime ) datetype = 'Posting' ).
-          FIND 'Invalid' IN psDate.
-          IF sy-subrc = 0.
-            message = psDate.
-            UPDATE zbankreceipt
-               SET errorlog = @message
-               WHERE Id = @wa_data-Id.
-            RETURN.
-          ENDIF.
-
-          DATA(dcDate) = checkDateFormat( date = CONV string( wa_data-Creditdatetime ) datetype = 'Document' ).
-          FIND 'Invalid' IN dcDate.
-          IF sy-subrc = 0.
-            message = dcDate.
-            UPDATE zbankreceipt
-               SET errorlog = @message
-               WHERE Id = @wa_data-Id.
-            RETURN.
-          ENDIF.
-
-          message = postCustomerPayment( wa_data = wa_data psdate = psDate dcdate = dcDate ).
-
-        ENDLOOP.
-
-      CATCH cx_sy_conversion_no_date INTO DATA(lx_date).
-        message = |Error in Date Conversion: { lx_date->get_text( ) }|.
-
-      CATCH cx_sy_conversion_no_time INTO DATA(lx_time).
-        message = |Error in Time Conversion: { lx_time->get_text( ) }|.
-
-      CATCH cx_sy_open_sql_db INTO DATA(lx_sql).
-        message = |SQL Error: { lx_sql->get_text( ) }|.
-
-      CATCH cx_root INTO DATA(lx_root).
-        message = |General Error: { lx_root->get_text( ) }|.
-    ENDTRY.
-
+    IF lv_match = 1.
+      TRY.
+          SPLIT date AT '-' INTO  DATA(lv_date_parts1) DATA(lv_date_parts2) DATA(lv_date_parts3) .
+          message = lv_date_parts3 && lv_date_parts2 && lv_date_parts1.
+        CATCH cx_sy_itab_line_not_found.
+          message = |Invalid { dateType } date format: { date }|.
+          RETURN.
+      ENDTRY.
+    ELSEIF lv_match = 2.
+      TRY.
+          DATA(lv_date_parts4) = date.
+          REPLACE ALL OCCURRENCES OF '-' IN lv_date_parts4 WITH ''.
+          message = lv_date_parts4.
+        CATCH cx_sy_itab_line_not_found.
+          message = |Invalid { dateType } date format: { date }|.
+          RETURN.
+      ENDTRY.
+    ELSE.
+      message = |Invalid { dateType } date format: { date }|.
+      RETURN.
+    ENDIF.
 
   ENDMETHOD.
 
@@ -119,6 +90,15 @@ CLASS zcl_bankreceiptaccpost IMPLEMENTATION.
         ASSERT 1 = 0.
     ENDTRY.
   ENDMETHOD.
+
+
+  METHOD if_http_service_extension~handle_request.
+    CASE request->get_method(  ).
+      WHEN CONV string( if_web_http_client=>post ).
+        response->set_text( postData( request ) ).
+    ENDCASE.
+  ENDMETHOD.
+
 
  METHOD postCustomerPayment.
    DATA: lt_je_deep TYPE TABLE FOR ACTION IMPORT i_journalentrytp~post,
@@ -239,51 +219,66 @@ CLASS zcl_bankreceiptaccpost IMPLEMENTATION.
  ENDMETHOD.
 
 
+  METHOD postData.
 
+    DATA: lv_oipaym TYPE TABLE OF zr_oipayments,
+          wa_oipaym TYPE zr_oipayments.
 
+    TYPES: BEGIN OF ty_json_structure,
+             Id TYPE i,
+           END OF ty_json_structure.
 
-  METHOD checkDateFormat.
+    DATA tt_json_structure TYPE TABLE OF ty_json_structure WITH EMPTY KEY.
 
-    DATA: lv_match TYPE i.
-    DATA: lv_date_parts TYPE TABLE OF string.
+    TRY.
 
-    FIND REGEX '^\d{2}-\d{2}-\d{4}$'  IN date.
+        xco_cp_json=>data->from_string( request->get_text( ) )->write_to( REF #( tt_json_structure ) ).
 
-    IF sy-subrc = 0.
-      lv_match = 1.
-    ELSE.
-      lv_match = 0.
-    ENDIF.
+        LOOP AT tt_json_structure INTO DATA(wa).
 
-    FIND REGEX '^\d{4}-\d{2}-\d{2}$'  IN date.
-    IF sy-subrc = 0.
-      lv_match = 2.
-    ENDIF.
+          SELECT SINGLE * FROM zr_bankreceipt
+          WHERE Id = @wa-Id
+             INTO @DATA(wa_data).
 
-    IF lv_match = 1.
-      TRY.
-          SPLIT date AT '-' INTO  DATA(lv_date_parts1) DATA(lv_date_parts2) DATA(lv_date_parts3) .
-          message = lv_date_parts3 && lv_date_parts2 && lv_date_parts1.
-        CATCH cx_sy_itab_line_not_found.
-          message = |Invalid { dateType } date format: { date }|.
-          RETURN.
-      ENDTRY.
-    ELSEIF lv_match = 2.
-      TRY.
-          DATA(lv_date_parts4) = date.
-          REPLACE ALL OCCURRENCES OF '-' IN lv_date_parts4 WITH ''.
-          message = lv_date_parts4.
-        CATCH cx_sy_itab_line_not_found.
-          message = |Invalid { dateType } date format: { date }|.
-          RETURN.
-      ENDTRY.
-    ELSE.
-      message = |Invalid { dateType } date format: { date }|.
-      RETURN.
-    ENDIF.
+          wa_data-Creditdatetime = wa_data-Creditdatetime+0(10).
+
+          DATA(psDate) = checkDateFormat( date = CONV string( wa_data-Creditdatetime ) datetype = 'Posting' ).
+          FIND 'Invalid' IN psDate.
+          IF sy-subrc = 0.
+            message = psDate.
+            UPDATE zbankreceipt
+               SET errorlog = @message
+               WHERE Id = @wa_data-Id.
+            RETURN.
+          ENDIF.
+
+          DATA(dcDate) = checkDateFormat( date = CONV string( wa_data-Creditdatetime ) datetype = 'Document' ).
+          FIND 'Invalid' IN dcDate.
+          IF sy-subrc = 0.
+            message = dcDate.
+            UPDATE zbankreceipt
+               SET errorlog = @message
+               WHERE Id = @wa_data-Id.
+            RETURN.
+          ENDIF.
+
+          message = postCustomerPayment( wa_data = wa_data psdate = psDate dcdate = dcDate ).
+
+        ENDLOOP.
+
+      CATCH cx_sy_conversion_no_date INTO DATA(lx_date).
+        message = |Error in Date Conversion: { lx_date->get_text( ) }|.
+
+      CATCH cx_sy_conversion_no_time INTO DATA(lx_time).
+        message = |Error in Time Conversion: { lx_time->get_text( ) }|.
+
+      CATCH cx_sy_open_sql_db INTO DATA(lx_sql).
+        message = |SQL Error: { lx_sql->get_text( ) }|.
+
+      CATCH cx_root INTO DATA(lx_root).
+        message = |General Error: { lx_root->get_text( ) }|.
+    ENDTRY.
+
 
   ENDMETHOD.
-
-
-
 ENDCLASS.

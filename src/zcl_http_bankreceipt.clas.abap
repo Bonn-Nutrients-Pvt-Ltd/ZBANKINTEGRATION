@@ -23,9 +23,14 @@ ENDCLASS.
 
 CLASS ZCL_HTTP_BANKRECEIPT IMPLEMENTATION.
 
-METHOD if_oo_adt_classrun~main.
-DELETE From zbankpayable where vutatag = ''.
-ENDMETHOD.
+
+  METHOD getCID.
+    TRY.
+        cid = to_upper( cl_uuid_factory=>create_system_uuid( )->create_uuid_x16( ) ).
+      CATCH cx_uuid_error.
+        ASSERT 1 = 0.
+    ENDTRY.
+  ENDMETHOD.
 
 
   method IF_HTTP_SERVICE_EXTENSION~HANDLE_REQUEST.
@@ -36,6 +41,11 @@ ENDMETHOD.
 
 
   ENDMETHOD.
+
+
+METHOD if_oo_adt_classrun~main.
+DELETE From zbankpayable where vutatag = ''.
+ENDMETHOD.
 
 
   METHOD saveData.
@@ -126,13 +136,5 @@ ENDMETHOD.
     ENDTRY.
 
 
-  ENDMETHOD.
-
-  METHOD getCID.
-    TRY.
-        cid = to_upper( cl_uuid_factory=>create_system_uuid( )->create_uuid_x16( ) ).
-      CATCH cx_uuid_error.
-        ASSERT 1 = 0.
-    ENDTRY.
   ENDMETHOD.
 ENDCLASS.

@@ -30,6 +30,7 @@ CLASS LHC_ZR_BANKPAYABLE IMPLEMENTATION.
                    Createdtime = <key>-Createdtime
                    Vutdate = <key>-Vutdate
                    Unit = <key>-Unit
+                   InstructionRefNum = <key>-InstructionRefNum
                    Vutacode = Vutacode
                 ) )
               FAILED DATA(lt_failed)
