@@ -42,28 +42,6 @@ ENDCLASS.
 CLASS ZCL_HTTP_BANKPAYABLEPOST IMPLEMENTATION.
 
 
-  METHOD checkDateFormat.
-
-    DATA: lv_date_parts TYPE TABLE OF string.
-    TRY.
-        SPLIT date AT '/' INTO  DATA(lv_date_parts1) DATA(lv_date_parts2) DATA(lv_date_parts3) .
-        message = lv_date_parts3 && lv_date_parts2 && lv_date_parts1.
-      CATCH cx_sy_itab_line_not_found.
-        message = |Invalid { dateType } date format: { date }|.
-        RETURN.
-    ENDTRY.
-  ENDMETHOD.
-
-
-  METHOD getCID.
-    TRY.
-        cid = to_upper( cl_uuid_factory=>create_system_uuid( )->create_uuid_x16( ) ).
-      CATCH cx_uuid_error.
-        ASSERT 1 = 0.
-    ENDTRY.
-  ENDMETHOD.
-
-
   METHOD if_http_service_extension~handle_request.
     CASE request->get_method(  ).
       WHEN CONV string( if_web_http_client=>post ).
@@ -161,6 +139,14 @@ CLASS ZCL_HTTP_BANKPAYABLEPOST IMPLEMENTATION.
   ENDMETHOD.
 
 
+  METHOD getCID.
+    TRY.
+        cid = to_upper( cl_uuid_factory=>create_system_uuid( )->create_uuid_x16( ) ).
+      CATCH cx_uuid_error.
+        ASSERT 1 = 0.
+    ENDTRY.
+  ENDMETHOD.
+
       METHOD postSupplierPayment.
         DATA: lt_je_deep     TYPE TABLE FOR ACTION IMPORT i_journalentrytp~post,
               document       TYPE string,
@@ -173,7 +159,7 @@ CLASS ZCL_HTTP_BANKPAYABLEPOST IMPLEMENTATION.
 
         SELECT SINGLE FROM zbrstable
           FIELDS  acc_id AS HouseBankAccount, house_bank AS HouseBank
-          WHERE out_gl = @wa_data-Vutacode
+          WHERE main_gl = @wa_data-Vutacode
                   AND comp_code = @ls_company-comp_code
           INTO @DATA(ls_housebank).
 
@@ -277,4 +263,20 @@ CLASS ZCL_HTTP_BANKPAYABLEPOST IMPLEMENTATION.
         ENDIF.
 
       ENDMETHOD.
+
+
+  METHOD checkDateFormat.
+
+    DATA: lv_date_parts TYPE TABLE OF string.
+    TRY.
+        SPLIT date AT '/' INTO  DATA(lv_date_parts1) DATA(lv_date_parts2) DATA(lv_date_parts3) .
+        message = lv_date_parts3 && lv_date_parts2 && lv_date_parts1.
+      CATCH cx_sy_itab_line_not_found.
+        message = |Invalid { dateType } date format: { date }|.
+        RETURN.
+    ENDTRY.
+  ENDMETHOD.
+
+
+
 ENDCLASS.
