@@ -117,7 +117,7 @@ sap.ui.define([
                                     VutATag: element["Account Type"]?.toString() || "",
                                     vutaacode: element["Customer/Supplier/Employee"]?.toString() || "",
                                     vutamt: element["Amount"] || 0,
-                                    custref: element["Reference No"]?.toString() || "",
+                                    custref: element["Description (GL,Suplr,Cust,emp)"]?.toString() || "",
                                     vutref: element["Reference No"]?.toString() || "",
                                     vutnart: element["Narration"]?.toString() || "",
                                     vutcostcd: element["Costing Head"]?.toString() || "",
