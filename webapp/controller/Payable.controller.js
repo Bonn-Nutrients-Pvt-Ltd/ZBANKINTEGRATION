@@ -7,11 +7,15 @@ sap.ui.define([
     "use strict";
     return Controller.extend("zpayable.controller.Payable", {
 
+        // 
         onInit() {
             this.oDataModel = new ODataModel("/sap/opu/odata/sap/ZUI_BANKINTEGRATION", {
                 defaultCountMode: "None"
             });
             this.getView().setModel(this.oDataModel);
+
+            this.uploadedCombinations = []; // NEW
+            this.lastUploadedFileName = ""; // NEW
         },
 
         onClickDelete() {
@@ -77,8 +81,9 @@ sap.ui.define([
             });
 
         },
+        
         browseAndUpload(oEvent) {
-            var filename = this.byId("fileUploader").getValue()
+            var filename = this.byId("fileUploader").getValue();
             var that = this;
             var file = oEvent.getParameter("files") && oEvent.getParameter("files")[0];
             if (!file) {
@@ -106,12 +111,17 @@ sap.ui.define([
                             excelData = XLSX.utils.sheet_to_row_object_array(worksheet);
                             headers = XLSX.utils.sheet_to_json(worksheet, { header: 1 })[0];
 
-                            excelData.forEach(function (element) {
-                                // var [day, month, year] = element["VutDate"].split("-");
-                                // var formattedDate = `${year}${month}${day}`;
+                            for (let element of excelData) {
+                                let vutdate = element["Voucher Date"];
+                                // let fileKey = `${vutdate}_${filename}`;
+                                // if (that.uploadedCombinations.includes(fileKey)) {
+                                //     MessageToast.show(`File already uploaded for Voucher Date: ${vutdate}`);
+                                //     BusyIndicator.hide();
+                                //     return;
+                                // }
 
                                 datas.push({
-                                    vutdate: element["Voucher Date"],
+                                    vutdate: vutdate,
                                     unit: element["Plant "]?.toString() || "",
                                     VutAcode: element["GL Account"]?.toString() || "",
                                     VutATag: element["Account Type"]?.toString() || "",
@@ -127,7 +137,11 @@ sap.ui.define([
                                     uploadName: filename || ""
                                 });
 
-                            });
+                                // that.uploadedCombinations.push(fileKey); // NEW
+                            }
+
+                            // Set file name for download
+                            // that.lastUploadedFileName = filename; // NEW
 
                             $.ajax({
                                 url: '/sap/bc/http/sap/ZHTTP_BANKPAYABLE',
@@ -138,6 +152,7 @@ sap.ui.define([
                                     MessageToast.show(response);
                                     that.byId("_IDGenSmartTable").rebindTable(true);
                                     BusyIndicator.hide();
+                                    that.byId("_IDGenInput").setValue(filename);
                                 },
                                 error: function (error) {
                                     MessageToast.show("Upload failed: " + (error.responseText || "Unknown error"));
@@ -148,11 +163,12 @@ sap.ui.define([
                         });
 
                     } catch (error) {
-                        MessageToast.show("Error parsing the Excel file: ", error);
+                        MessageToast.show("Error parsing the Excel file: " + error.message);
+                        BusyIndicator.hide();
                     }
                 };
                 reader.onerror = function (error) {
-                    MessageToast.show("Error reading file: ", error);
+                    MessageToast.show("Error reading file: " + error.message);
                 };
                 reader.readAsBinaryString(file);
             } else {
@@ -161,15 +177,29 @@ sap.ui.define([
         },
 
         onClickExport: function () {
+            // const filename = this.lastUploadedFileName || "bankupload";
+            // const cleanFileName = filename.replace(/\.[^/.]+$/, ""); // Remove .xlsx or other extensions
+            // const input = this.byId("fileNameInput"); // Make sure your dialog has an Input with this ID
+            // if (input) {
+            //     input.setValue(cleanFileName);
+            // }
             this.byId("_IDGenDialog").open();
         },
+        
         onCloseDownloadDialog: function () {
             this.byId("_IDGenDialog").close();
         },
+        
         onClickDownload() {
             var formData = new FormData();
-            let that = this;
-            formData.append("filename", this.byId("_IDGenInput").getValue());
+            let that = this,
+            file = this.byId("_IDGenInput").getValue();
+
+            let newFileName = file.split(".");
+            newFileName.pop();
+            newFileName.push("csv");
+
+            formData.append("filename", file);
             BusyIndicator.show(0);
             $.ajax({
                 url: "/sap/bc/http/sap/ZHTTP_BANKPAYABLEDNLD",
@@ -180,12 +210,10 @@ sap.ui.define([
                 success: function (result) {
                     const blob = new Blob([result], { type: "text/csv;charset=utf-8;" });
                     const url = URL.createObjectURL(blob);
-
                     const link = document.createElement("a");
                     link.setAttribute("href", url);
-                    link.setAttribute("download", "bankupload.csv");
+                    link.setAttribute("download", newFileName.join(".")); // NEW
                     link.style.visibility = "hidden";
-
                     document.body.appendChild(link);
                     link.click();
                     document.body.removeChild(link);
@@ -197,6 +225,7 @@ sap.ui.define([
                 }
             });
         },
+
         msToHHMMSS(ms) {
             // Convert milliseconds to total seconds
             const totalSeconds = Math.floor(ms / 1000);
@@ -266,16 +295,18 @@ sap.ui.define([
                 MessageToast.show("Please select a CSV file.");
                 return;
             }
-            let filename = this.file.name;
+
+            let filename = this.lastUploadedFileName;
+
             if (window.FileReader) {
                 var reader = new FileReader();
                 reader.onload = function (e) {
                     var data = e.target.result;
+
+                    // Let backend verify file content
                     $.ajax({
                         url: '/sap/bc/http/sap/ZHTTP_BANKPAYABLESHOW',
-                        headers: {
-                            "filename": filename
-                        },
+                        headers: { "filename": filename },
                         method: "POST",
                         contentType: "application/json",
                         data: data,
@@ -290,9 +321,10 @@ sap.ui.define([
                     });
                 };
                 reader.onerror = function (error) {
-                    MessageToast.show("Error reading file: ", error);
+                    MessageToast.show("Error reading file: " + error.message);
                 };
-                reader.readAsText(this.file);
+
+                reader.readAsText(this.file); // It auto handles CSV content regardless of file extension
             } else {
                 MessageToast.show("FileReader is not supported in this browser.");
             }

@@ -108,7 +108,6 @@
                         name="myFileUpload"
                         uploadUrl="upload/"
                         change="uploadcsvfilechange"
-                        fileType="CSV,csv"
                         tooltip="Upload your file to the local server"
                         buttonOnly="false"
                     />
